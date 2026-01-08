@@ -1,9 +1,9 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { serve } = require('@upstash/workflow/express');
+const { serve } = require('@upstash/workflow/express.js');
 import dayjs from "dayjs";
-import Subscription from "../models/subscription.model";
-import { sendReminderEmail } from "../utils/send-email";
+import Subscription from "../models/subscription.model.js";
+import { sendReminderEmail } from "../utils/send-email.js";
 const REMINDERS = [7, 5, 2, 1];
 export const sendReminders = serve(async (context) => {
     const { subscriptionId } = context.requestPayload;
