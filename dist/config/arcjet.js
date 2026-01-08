@@ -30,5 +30,17 @@ const aj = arcjet({
             capacity: 10, // Bucket capacity of 10 tokens
         }),
     ],
+    fingerprint: {
+        ip: (req) => {
+            const xff = req.headers['x-forwarded-for'];
+            if(xff){
+                const ips = xff.split(',').map(ip => ip.trim());
+                for (const ip of ips){
+                    if(!/^10\.|^192\.168\.|^172\.(1[6-9]|2[0-9]|3[0-1])/.test(ip)) return ip;
+                }
+            }
+            return req.socket?.remoteAddress || "127.0.0.1";
+        }
+    }
 });
 export default aj;
