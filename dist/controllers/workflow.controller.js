@@ -1,6 +1,6 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { serve } = require('@upstash/workflow/express.js');
+const { serve } = require('@upstash/workflow/express');
 import dayjs from "dayjs";
 import Subscription from "../models/subscription.model.js";
 import { sendReminderEmail } from "../utils/send-email.js";
