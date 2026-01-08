@@ -5,3 +5,4 @@ eslint.config.js
 tsconfig.json
 scripts/
 update-deploy.ps1
+dist/types/*
