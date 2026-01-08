@@ -18,6 +18,13 @@ app.use(cookieParser());
 
 app.get('/health', (_, res) => res.status(200).send("OK"));
 
+app.use((req, res, next) => {
+    const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || "127.0.0.1";
+    console.log("Resolved client IP:", ip);
+    next();
+});
+
+
 app.use(arcjetMiddleware);
 
 app.get('/', (req, res) => {
