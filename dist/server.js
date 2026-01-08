@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 const startServer = async () => {
     try {
         await connectToDatabase();
-        app.listen(PORT, () => {
+        app.listen(PORT || 3000, '0.0.0.0', () => {
             console.log(`Subscription Tracker API is running on http://localhost:${PORT}`);
             console.log(`Connected to database in ${NODE_ENV} mode `);
         });
