@@ -1,12 +1,6 @@
-# prod
 node_modules/
 .env.*.local
 src/
 eslint.config.js
 tsconfig.json
 scripts/
-
-# dev 
-# node_modules/
-# .env.*.local
-# src/
