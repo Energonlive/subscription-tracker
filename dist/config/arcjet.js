@@ -39,7 +39,7 @@ const aj = arcjet({
                     if(!/^10\.|^192\.168\.|^172\.(1[6-9]|2[0-9]|3[0-1])/.test(ip)) return ip;
                 }
             }
-            return req.socket?.remoteAddress || "127.0.0.1";
+            return (req.socket?.remoteAddress || "127.0.0.1");
         }
     }
 });
