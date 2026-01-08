@@ -1,6 +1,5 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import 'dotenv/config.js';
 import { PORT, NODE_ENV } from "./config/env.js";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
@@ -13,21 +12,30 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.get('/health', (_, res) => res.status(200).send("OK"));
+
 app.use(arcjetMiddleware);
+
+app.get('/', (req, res) => {
+    res.send("Welcome to the Subscription Tracker API");
+});
+
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/subscriptions', subscriptionRouter);
 app.use('/api/v1/workflows', workFlowRouter);
+
 app.use(errorMiddleware);
-app.get('/', (req, res) => {
-    res.send("Welcome to the Subscription Tracker API");
-});
+
+
 const startServer = async () => {
     try {
+        if(!PORT) throw new Error('PORT is not defined');
         await connectToDatabase();
-        app.listen(PORT, () => {
-            console.log(`Subscription Tracker API is running on http://localhost:${PORT}`);
-            console.log(`Connected to database in ${NODE_ENV} mode `);
+        app.listen(Number(PORT), '0.0.0.0', () => {
+            console.log(`Server running on port ${PORT}`);
+            console.log(`Environment: ${NODE_ENV}`);
         });
     }
     catch (e) {

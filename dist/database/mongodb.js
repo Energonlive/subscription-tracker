@@ -21,7 +21,7 @@ const connectToDatabase = async () => {
         try {
             await mongoose.connect(DB_URI, options);
             console.log('Connected to MongoDB');
-            setupConnectionListeners();
+            // setupConnectionListeners();
             return;
         }
         catch (e) {
@@ -37,36 +37,36 @@ const connectToDatabase = async () => {
         }
     }
 };
-const setupConnectionListeners = () => {
-    if (mongoose.connection.listenerCount('error') > 0) {
-        return;
-    }
-    mongoose.connection.on('connected', () => {
-        console.log('Mongoose connected to mongoDB');
-    });
-    mongoose.connection.on('error', (err) => {
-        console.log('Mongoose connection error:', err);
-    });
-    mongoose.connection.on('disconnected', () => {
-        console.log('Mongoose disconnected from mongoDB');
-    });
-    mongoose.connection.on('reconnected', () => {
-        console.log('Mongoose reconnected to mongoDB');
-    });
-};
-const gracefulShutdown = async (signal) => {
-    console.log(`\n${signal} received. Closing MongoDB connection...`);
-    try {
-        await mongoose.connection.close();
-        console.log('MongoDB connection closed gracefully');
-        process.exit(0);
-    }
-    catch (err) {
-        console.error('Error during graceful shutdown:', err);
-        process.exit(1);
-    }
-};
-process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-process.on('SIGUSR2', () => gracefulShutdown('SIGUSR2'));
+// const setupConnectionListeners = () => {
+//     if (mongoose.connection.listenerCount('error') > 0) {
+//         return;
+//     }
+//     mongoose.connection.on('connected', () => {
+//         console.log('Mongoose connected to mongoDB');
+//     });
+//     mongoose.connection.on('error', (err) => {
+//         console.log('Mongoose connection error:', err);
+//     });
+//     mongoose.connection.on('disconnected', () => {
+//         console.log('Mongoose disconnected from mongoDB');
+//     });
+//     mongoose.connection.on('reconnected', () => {
+//         console.log('Mongoose reconnected to mongoDB');
+//     });
+// };
+// const gracefulShutdown = async (signal) => {
+//     console.log(`\n${signal} received. Closing MongoDB connection...`);
+//     try {
+//         await mongoose.connection.close();
+//         console.log('MongoDB connection closed gracefully');
+//         process.exit(0);
+//     }
+//     catch (err) {
+//         console.error('Error during graceful shutdown:', err);
+//         process.exit(1);
+//     }
+// };
+// process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+// process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+// process.on('SIGUSR2', () => gracefulShutdown('SIGUSR2'));
 export default connectToDatabase;
